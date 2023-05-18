@@ -1,0 +1,359 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: data/data_preprocessing.py",
+            "type": "python",
+            "request": "launch",
+            "program": "data/data_preprocessing.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: data/data_preprocessing_each_file.py",
+            "type": "python",
+            "request": "launch",
+            "program": "data/data_preprocessing_each_file.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: dataset/convert_rawdata_to_dataset.py",
+            "type": "python",
+            "request": "launch",
+            "program": "dataset/convert_rawdata_to_dataset.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: dataset/convert_rawdata_to_dataset_50.py",
+            "type": "python",
+            "request": "launch",
+            "program": "dataset/convert_rawdata_to_dataset_50.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: python experiments/span_extraction/train_QA.py --model rob --cuda 0,2,3 --train_file dataset/span_extraction/train_task3.json --validation_file dataset/span_extraction/dev_task3.json --test_file dataset/span_extraction/test_task3.json",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/train_QA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--model",
+                "rob",
+                "--cuda",
+                "6",
+                "--train_file",
+                "dataset/span_extraction/train_task3.json",
+                "--validation_file",
+                "dataset/span_extraction/dev_task3.json",
+                "--test_file",
+                "dataset/span_extraction/test_task3.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === TRAIN === bert-base-chinese",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_bert_results/",
+                "--model_type=bert",
+                "--model_checkpoint=bert-base-chinese",
+                "--train_file=dataset/span_extraction/task3_train.json",
+                "--dev_file=dataset/span_extraction/task3_dev.json",
+                "--test_file=dataset/span_extraction/task3_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_train",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === PREDICT === bert-base-chinese",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_bert_results/",
+                "--model_type=bert",
+                "--model_checkpoint=bert-base-chinese",
+                "--train_file=dataset/span_extraction/task3_train.json",
+                "--dev_file=dataset/span_extraction/task3_dev.json",
+                "--test_file=dataset/span_extraction/task3_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_predict",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === TRAIN === hfl/chinese-roberta-wwm-ext",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_roberta_results/",
+                "--model_type=roberta",
+                "--model_checkpoint=hfl/chinese-roberta-wwm-ext",
+                "--train_file=dataset/span_extraction/task3_train.json",
+                "--dev_file=dataset/span_extraction/task3_dev.json",
+                "--test_file=dataset/span_extraction/task3_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_train",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === PREDICT === hfl/chinese-roberta-wwm-ext",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_roberta_results/",
+                "--model_type=roberta",
+                "--model_checkpoint=hfl/chinese-roberta-wwm-ext",
+                "--train_file=dataset/span_extraction/task3_train.json",
+                "--dev_file=dataset/span_extraction/task3_dev.json",
+                "--test_file=dataset/span_extraction/task3_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_predict",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === TRAIN === hfl/chinese-macbert-base",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_macbert_results/",
+                "--model_type=macbert",
+                "--model_checkpoint=hfl/chinese-macbert-base",
+                "--train_file=dataset/span_extraction/task3_train.json",
+                "--dev_file=dataset/span_extraction/task3_dev.json",
+                "--test_file=dataset/span_extraction/task3_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_train",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === PREDICT === hfl/chinese-macbert-base",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_macbert_results/",
+                "--model_type=macbert",
+                "--model_checkpoint=hfl/chinese-macbert-base",
+                "--train_file=dataset/span_extraction/task3_train.json",
+                "--dev_file=dataset/span_extraction/task3_dev.json",
+                "--test_file=dataset/span_extraction/task3_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_predict",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: run_extractiveQA.py === TRAIN === uer/roberta-base-chinese-extractive-qa",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction/run_extractiveQA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir=experiments/span_extraction/results/task3_roberta_qa_results/",
+                "--model_type=roberta",
+                "--model_checkpoint=uer/roberta-base-chinese-extractive-qa",
+                "--train_file=dataset/span_extraction/task3_11111_train.json",
+                "--dev_file=dataset/span_extraction/task3_11111_dev.json",
+                "--test_file=dataset/span_extraction/task3_11111_test.json",
+                "--max_length=384",
+                "--max_answer_length=30",
+                "--stride=128",
+                "--n_best=20",
+                "--learning_rate=1e-5",
+                "--num_train_epochs=3",
+                "--batch_size=4",
+                "--do_train",
+                "--warmup_proportion=0.",
+                "--seed=42"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: experiments/span_extraction_self_BERTCLASS/all_code_QA.py",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/span_extraction_self_BERTCLASS/all_code_QA.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6"
+            },
+            "console": "integratedTerminal",
+            "args": [],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: python classification train.py --model_name hfl/chinese-macbert-base --train_path ../data/benchmark1/train.json --dev_path ../data/benchmark1/dev.json --test_path ../data/benchmark1/test.json --batch_size_per_gpu 48 --gradient_accumulation_steps 2 --learning_rate 2e-5 --task_name ErroneousDetection --epochs 3 --do_train True --do_eval True --do_test True --focal_alpha 0.3",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/classification/train.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,6"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--model_name",
+                "hfl/chinese-macbert-base",
+                "--train_path=dataset/classification/task1_cla_11111_train_copy.json",
+                "--dev_path=dataset/classification/task1_cla_11111_dev.json",
+                "--test_path=dataset/classification/task1_cla_11111_test.json",
+                "--batch_size_per_gpu",
+                "1",
+                "--gradient_accumulation_steps",
+                "2",
+                "--learning_rate",
+                "2e-5",
+                "--task_name=task1",
+                "--epochs",
+                "3",
+                "--do_train",
+                "True",
+                "--do_eval",
+                "True",
+                "--do_test",
+                "True",
+                "--focal_alpha",
+                "0.3"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: python train.py --model_name hfl/chinese-macbert-base --train_path ../data/benchmark1/train.json --dev_path ../data/benchmark1/dev.json --test_path ../data/benchmark1/test.json --batch_size_per_gpu 48 --gradient_accumulation_steps 2 --learning_rate 2e-5 --task_name ErroneousDetection --epochs 3 --do_train True --do_eval True --do_test True --focal_alpha 0 cd /data/dans/projects/CORECODE",
+            "type": "python",
+            "request": "launch",
+            "program": "train.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--model_name",
+                "hfl/chinese-macbert-base",
+                "--train_path",
+                "../data/benchmark1/train.json",
+                "--dev_path",
+                "../data/benchmark1/dev.json",
+                "--test_path",
+                "../data/benchmark1/test.json",
+                "--batch_size_per_gpu",
+                "48",
+                "--gradient_accumulation_steps",
+                "2",
+                "--learning_rate",
+                "2e-5",
+                "--task_name",
+                "ErroneousDetection",
+                "--epochs",
+                "3",
+                "--do_train",
+                "True",
+                "--do_eval",
+                "True",
+                "--do_test",
+                "True",
+                "--focal_alpha",
+                "0",
+                "cd",
+                "/data/dans/projects/CORECODE"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        }
+    ]
+}

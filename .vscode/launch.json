@@ -22,10 +22,10 @@
             "cwd": "/data/dans/projects/CORECODE"
         },
         {
-            "name": "Python: dataset/convert_rawdata_to_dataset.py",
+            "name": "Python: dataset/convert_rawdata_to_dataset_chuang.py",
             "type": "python",
             "request": "launch",
-            "program": "dataset/convert_rawdata_to_dataset.py",
+            "program": "dataset/convert_rawdata_to_dataset_chuang.py",
             "env": {},
             "console": "integratedTerminal",
             "args": [],
@@ -352,6 +352,33 @@
                 "0",
                 "cd",
                 "/data/dans/projects/CORECODE"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: mmm_glm10b.py",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/chatglm-few-shot/mmm_glm10b.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--chat"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: 1-shot.py",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/1-shot.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--chat",
+                "--input_path=dataset/generation/all_task1_gen.json"
             ],
             "cwd": "/data/dans/projects/CORECODE"
         }

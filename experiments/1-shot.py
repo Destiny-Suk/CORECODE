@@ -5,7 +5,7 @@ import json
 import os
 import random
 import re
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModel,AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModel, AutoModelForCausalLM
 
 import numpy as np
 import json, argparse
@@ -20,9 +20,9 @@ def get_args():
     parser.add_argument("--chat", default=False, action="store_true",
                         help="Whether to use GLM6B-CHAT")
     
-    parser.add_argument("--use_10b", default=False, action="store_true",
+    parser.add_argument("--glm_10b_chinese", default=False, action="store_true",
                         help="10B-GLM")
-    parser.add_argument("--use_335m", default=True, action="store_true",
+    parser.add_argument("--glm_large_chinese", default=True, action="store_true",
                         help="335m-GLM")
     
     parser.add_argument("--belle_7B_02M", default=False, action="store_true",
@@ -50,9 +50,14 @@ def get_args():
 def generate_answer(args,text,model,tokenizer):
     if args.chat:
         if args.test:
-            answer, history = model.chat(tokenizer, text.replace('[MASK]', ''), history=[])
+            answer, history = model.chat(tokenizer, text, history=[])
         else:
-            answer, history = model.chat(tokenizer, text.replace('[MASK]',''), history=[])
+            answer, history = model.chat(tokenizer, text, history=[])
+    # if args.chat:
+    #     if args.test:
+    #         answer, history = model.chat(tokenizer, text.replace('[MASK]', ''), history=[])
+    #     else:
+    #         answer, history = model.chat(tokenizer, text.replace('[MASK]',''), history=[])
     elif args.belle_7B_2M or args.belle_7B_02M or args.belle_7B_1M:
         # print(text)
         if args.test:
@@ -62,7 +67,7 @@ def generate_answer(args,text,model,tokenizer):
         outputs = model.generate(input_ids, max_new_tokens=3, do_sample=True, top_k=30, top_p=0.85, temperature=0.35,
                                  repetition_penalty=1.2)
         answer = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-        # print(answer)
+        print(answer)
         # answer = str(answer[0]).replace('给出下面问题的正确选项:{}'.format(text), '')
         answer = answer[0].strip().split('正确的选项是')
         answer = str(answer[-1])
@@ -70,9 +75,7 @@ def generate_answer(args,text,model,tokenizer):
         # print("Assistant:\n" + answer[0].strip().replace(text, ""))
         # print("\n------------------------------------------------\nHuman:")
 
-    else:
-        # glm
-        # args = get_args()
+    else: # glm
         # print(text)
         inputs = tokenizer(text, return_tensors="pt")
         # print(inputs)
@@ -95,13 +98,14 @@ def generate_answer(args,text,model,tokenizer):
             answer = tokenizer.decode(outputs[0].tolist()).split(' <|startofpiece|> ')[1]
         except:
             answer = 'E'
+
     # answer = filter_answer(answer)
     # print("list_1_answer.{}".format(answer))
-    random_output = re.sub(r'[^ABCD]','',answer)
-    # if len(random_output) > 1:
-    #     random_output = random_output[0]
-    # print(random_output)
-    return random_output
+    filtered_answer = re.sub(r'[^0-9]','',answer) #将所有的非数字的字符都匹配为''
+    # if len(filtered_answer) > 1:
+    #     filtered_answer = filtered_answer[0]
+    return answer, filtered_answer
+
 
 if __name__ == "__main__":
     args = get_args()
@@ -118,9 +122,10 @@ if __name__ == "__main__":
     inputs = [instance["input"] for instance in data]
     answers = [instance["output"] for instance in data]
     
+    # args.input_path: 'dataset/generation/all_task1_gen.json'
     output_path = args.output_path
     if output_path == "":
-        output_path = "experiments/results/" + args.input_path.split("/")[1]
+        output_path = "experiments/results/output_" + args.input_path.split("/")[-1].split(".")[0]
     #chatglm
     if args.chat:
         if args.use_tju:
@@ -131,60 +136,75 @@ if __name__ == "__main__":
             model_path = "models/chatglm-6b"  # You can modify the path for storing the local model
             tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
             model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
-        directory = output_path+"output_mmm_glm6b"
+        directory = "chatglm-6b"
     else:
-        if args.use_10b:
-            model_path = "/root/autodl-tmp/PLM/glm-10b"  # You can modify the path for storing the local model
-            # 10B
+        if args.glm_10b_chinese:
+            model_path = "models/glm_10b_chinese"  # You can modify the path for storing the local model
             tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
             model = AutoModelForSeq2SeqLM.from_pretrained(model_path, trust_remote_code=True)
             model = model.half().cuda()
-            directory = "output_mmm_glm10b"
-        elif args.belle_7B_2M:
-            model_path = "/root/autodl-tmp/PLM/BELLE-7B-2M"  # You can modify the path for storing the local model
-            model = AutoModelForCausalLM.from_pretrained(model_path)
-            tokenizer = AutoTokenizer.from_pretrained(model_path)
-            model = model.half().cuda()
-            directory = "output_mmm_BELLE-7B-2M"
-        elif args.belle_7B_02M:
-            model_path = "/root/autodl-tmp/PLM/BELLE-7B-0.2M"  # You can modify the path for storing the local model
-            model = AutoModelForCausalLM.from_pretrained(model_path)
-            tokenizer = AutoTokenizer.from_pretrained(model_path)
-            model = model.half().cuda()
-            directory = "output_mmm_BELLE-7B-0.2M"
-        elif args.belle_7B_1M:
-            model_path = "/root/autodl-tmp/PLM/BELLE-7B-1M"  # You can modify the path for storing the local model
-            model = AutoModelForCausalLM.from_pretrained(model_path)
-            tokenizer = AutoTokenizer.from_pretrained(model_path)
-            model = model.half().cuda()
-            directory = "output_mmm_BELLE-7B-1M"
-        elif args.use_335m:
+            directory = "glm_10b_chinese"
+        elif args.glm_large_chinese:
             # 335M
-            tokenizer = AutoTokenizer.from_pretrained("/root/autodl-tmp/PLM/glm-large-chinese-335m", trust_remote_code=True)
-            model = AutoModelForSeq2SeqLM.from_pretrained("/root/autodl-tmp/PLM/glm-large-chinese-335m", trust_remote_code=True)
+            model_path = "models/glm-large-chinese"  # You can modify the path for storing the local model
+            tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+            model = AutoModelForSeq2SeqLM.from_pretrained(model_path, trust_remote_code=True)
             model = model.cuda()
-            directory = "output_mmm_glm335m"
+            directory = "glm-large-chinese"
+        elif args.belle_7B_2M:
+            model_path = "models/BELLE-7B-2M"  # You can modify the path for storing the local model
+            model = AutoModelForCausalLM.from_pretrained(model_path)
+            tokenizer = AutoTokenizer.from_pretrained(model_path)
+            model = model.half().cuda()
+            directory = "BELLE-7B-2M"
+        elif args.belle_7B_02M:
+            model_path = "models/BELLE-7B-0.2M"  # You can modify the path for storing the local model
+            model = AutoModelForCausalLM.from_pretrained(model_path)
+            tokenizer = AutoTokenizer.from_pretrained(model_path)
+            model = model.half().cuda()
+            directory = "BELLE-7B-0.2M"
+        elif args.belle_7B_1M:
+            model_path = "models/BELLE-7B-1M"  # You can modify the path for storing the local model
+            model = AutoModelForCausalLM.from_pretrained(model_path)
+            tokenizer = AutoTokenizer.from_pretrained(model_path)
+            model = model.half().cuda()
+            directory = "BELLE-7B-1M"
 
-        
-    directory = "/".join(output_path.split("/")[:-1]) #directory:
-    Path(directory).mkdir(parents=True, exist_ok=True)
+    each_model_output_path = "/".join((output_path, directory)) #each_model_output_path:
+    Path(each_model_output_path).mkdir(parents=True, exist_ok=True)
     
     corrects = []
-    for i,question in enumerate(inputs):
-        correct_count = 0
-        prediction = generate_answer(args, question, model, tokenizer)
-        print("生成答案:{},正确答案:{}".format(prediction, answers[i]))
-        if str(prediction) == str(answers[i]):
-            correct_count += 1
+    correct_count = 0
+    n=0
+    output_path = '{}/{}-shot-output.txt'.format(each_model_output_path, n)
+    metrics_path = '{}/{}-shot-metrics.txt'.format(each_model_output_path, n)
+    # if args.do_train and os.path.exists(args.output_dir) and os.listdir(args.output_dir):
+    if os.path.exists(output_path):
+        raise ValueError(f'Output directory ({output_path}) already exists and is not empty.')
+    with open(output_path,'a') as f:
+        # for i,question in enumerate(inputs):
+        for i,question in enumerate(inputs[:10]):
+            full_prediction, prediction = generate_answer(args, question, model, tokenizer)
+            if str(prediction) == str(answers[i]):
+                correct_count += 1
+            # 将前100条的问题答案写到文件里
+            if i <= 100:
+                print("--- 问题 ---:{}".format(question))
+                print("--- 正确答案 ---:{}".format(answers[i]))
+                print("--- 生成答案 ---:{}".format(prediction))
+                f.write("\n".join(("--- 问题 ---:{}".format(question),
+                        "--- 正确答案 ---:{}".format(answers[i]),
+                        "--- 生成答案 ---:{}".format(prediction),
+                        "--- 带解析答案 ---:{}".format(full_prediction))))
+                f.write("\n\n")
+    print('correct_count: {}, total_count: {}', (correct_count, len(answers)))
     print("accuracy:", correct_count/len(answers))
     corrects.append(str(correct_count/len(answers)))
 
-    output_metrics_path = output_path.split(".")[0] + ".txt" #output_metrics_path:
-    n=0
-    with open('{}/{}-{}-shot.txt'.format(directory,pathfile.split('.')[0],n),'w') as f:
+    with open(metrics_path,'w') as f:
         f.writelines(' '.join(corrects))
-    print ("Saved results in {}.".format(output_metrics_path))
-
+        f.write('correct_count: {}, total_count: {}', (correct_count, len(answers)))
+    print ("Saved results in {}.".format(each_model_output_path))
 
 
 

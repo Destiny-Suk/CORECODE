@@ -2,6 +2,47 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: 1-shot.py glm_10b_chinese",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/1-shot.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--glm_10b_chinese",
+                "--input_path=dataset/generation/all_task5_gen.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: 1-shot.py chat",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/1-shot.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--chat",
+                "--input_path=dataset/generation/all_task1_gen.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "Python: mmm_glm10b.py",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/chatglm-few-shot/mmm_glm10b.py",
+            "env": {},
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--chat"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
             "name": "Python: data/data_preprocessing.py",
             "type": "python",
             "request": "launch",
@@ -355,32 +396,5 @@
             ],
             "cwd": "/data/dans/projects/CORECODE"
         },
-        {
-            "name": "Python: mmm_glm10b.py",
-            "type": "python",
-            "request": "launch",
-            "program": "experiments/chatglm-few-shot/mmm_glm10b.py",
-            "env": {},
-            "console": "integratedTerminal",
-            "args": [
-                "--use_tju",
-                "--chat"
-            ],
-            "cwd": "/data/dans/projects/CORECODE"
-        },
-        {
-            "name": "Python: 1-shot.py",
-            "type": "python",
-            "request": "launch",
-            "program": "experiments/1-shot.py",
-            "env": {},
-            "console": "integratedTerminal",
-            "args": [
-                "--use_tju",
-                "--chat",
-                "--input_path=dataset/generation/all_task1_gen.json"
-            ],
-            "cwd": "/data/dans/projects/CORECODE"
-        }
     ]
 }

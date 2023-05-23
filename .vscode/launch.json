@@ -6,7 +6,9 @@
             "type": "python",
             "request": "launch",
             "program": "experiments/1-shot.py",
-            "env": {},
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7"
+            },
             "console": "integratedTerminal",
             "args": [
                 "--use_tju",
@@ -20,7 +22,9 @@
             "type": "python",
             "request": "launch",
             "program": "experiments/1-shot.py",
-            "env": {},
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7"
+            },
             "console": "integratedTerminal",
             "args": [
                 "--use_tju",

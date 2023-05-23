@@ -139,11 +139,11 @@ if __name__ == "__main__":
         directory = "chatglm-6b"
     else:
         if args.glm_10b_chinese:
-            model_path = "models/glm_10b_chinese"  # You can modify the path for storing the local model
+            model_path = "models/glm-10b-chinese"  # You can modify the path for storing the local model
             tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
             model = AutoModelForSeq2SeqLM.from_pretrained(model_path, trust_remote_code=True)
             model = model.half().cuda()
-            directory = "glm_10b_chinese"
+            directory = "glm-10b-chinese"
         elif args.glm_large_chinese:
             # 335M
             model_path = "models/glm-large-chinese"  # You can modify the path for storing the local model

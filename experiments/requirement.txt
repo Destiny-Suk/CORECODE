@@ -3,4 +3,5 @@ transformers==4.27.1
 icetk
 cpm_kernels
 tqdm
+scikit-learn
 xlrd==1.2.0

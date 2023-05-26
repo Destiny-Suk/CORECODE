@@ -2,34 +2,130 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: 1-shot.py glm_10b_chinese",
+            "name": "--gen-- chat task2",
             "type": "python",
             "request": "launch",
-            "program": "experiments/1-shot.py",
+            "program": "experiments/run_generation.py",
             "env": {
-                "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7"
-            },
-            "console": "integratedTerminal",
-            "args": [
-                "--use_tju",
-                "--glm_10b_chinese",
-                "--input_path=dataset/generation/all_task5_gen.json"
-            ],
-            "cwd": "/data/dans/projects/CORECODE"
-        },
-        {
-            "name": "Python: 1-shot.py chat",
-            "type": "python",
-            "request": "launch",
-            "program": "experiments/1-shot.py",
-            "env": {
-                "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7"
+                "CUDA_VISIBLE_DEVICES": "2,4"
             },
             "console": "integratedTerminal",
             "args": [
                 "--use_tju",
                 "--chat",
-                "--input_path=dataset/generation/all_task1_gen.json"
+                "--input_path=dataset/generation/all_task2_gen.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--gen-- chat task3",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_generation.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "2,4"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--chat",
+                "--input_path=dataset/generation/all_task3_gen.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--gen-- chat task6_1",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_generation.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "2,4"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--chat",
+                "--input_path=dataset/generation/all_task6_1_gen.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--sel-- chat task4",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_selection.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "5,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--bloomz_7b1",
+                "--input_path=dataset/selection/all_task4_sel.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--sel-- bloomz_7b1 task1",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_selection.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--bloomz_7b1",
+                "--input_path=dataset/selection/all_task1_sel.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--sel-- glm_10b_chinese task1",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_selection.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "4,5,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--glm_10b_chinese",
+                "--input_path=dataset/selection_for_glm/all_task1_sel.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--sel-- glm_10b_chinese task4",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_selection.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "5,6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--glm_10b_chinese",
+                "--input_path=dataset/selection_for_glm/all_task4_sel.json"
+            ],
+            "cwd": "/data/dans/projects/CORECODE"
+        },
+        {
+            "name": "--sel-- glm_10b_chinese task5",
+            "type": "python",
+            "request": "launch",
+            "program": "experiments/run_selection.py",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "6,7"
+            },
+            "console": "integratedTerminal",
+            "args": [
+                "--use_tju",
+                "--glm_10b_chinese",
+                "--input_path=dataset/selection/all_task5_sel.json"
             ],
             "cwd": "/data/dans/projects/CORECODE"
         },
